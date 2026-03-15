@@ -74,20 +74,25 @@ export function Btn({ children, v = "gold", sz = "md", className, onClick, loadi
   };
 
   return (
-    <button
+    <motion.button
+      whileHover={{ scale: 1.02, y: -2 }}
+      whileTap={{ scale: 0.98 }}
       onClick={onClick}
       disabled={disabled || loading}
       className={cn(
-        "inline-flex items-center justify-center rounded-xl font-bold transition-all duration-300 disabled:opacity-50 active:scale-95",
+        "inline-flex items-center justify-center rounded-xl font-bold transition-all duration-300 disabled:opacity-50 relative overflow-hidden group",
         variants[v],
         sizes[sz],
         className
       )}
     >
+      <div className="absolute inset-0 bg-white/20 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700 skew-x-[-20deg]" />
       {loading ? (
         <div className="w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin" />
-      ) : children}
-    </button>
+      ) : (
+        <span className="relative z-10">{children}</span>
+      )}
+    </motion.button>
   );
 }
 
@@ -123,20 +128,37 @@ export function Eyebrow({ children, color = "gold" }: any) {
 }
 
 export function Card({ children, className, hover, glow, glowColor = T.gold }: any) {
+  const containerRef = React.useRef<HTMLDivElement>(null);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!containerRef.current || !glow) return;
+    const { left, top } = containerRef.current.getBoundingClientRect();
+    const x = e.clientX - left;
+    const y = e.clientY - top;
+    containerRef.current.style.setProperty("--mouse-x", `${x}px`);
+    containerRef.current.style.setProperty("--mouse-y", `${y}px`);
+  };
+
   return (
-    <div className={cn(
-      "relative bg-white/[0.02] border border-white/5 rounded-2xl overflow-hidden transition-all duration-500",
-      hover && "hover:bg-white/[0.04] hover:border-white/10",
-      className
-    )}>
+    <motion.div
+      ref={containerRef}
+      onMouseMove={handleMouseMove}
+      whileHover={hover ? { y: -5 } : {}}
+      className={cn(
+        "relative bg-white/[0.02] border border-white/5 rounded-2xl overflow-hidden transition-all duration-500 group",
+        hover && "hover:bg-white/[0.04] hover:border-white/10 shadow-[0_20px_40px_rgba(0,0,0,0.3)]",
+        className
+      )}
+    >
       {glow && (
         <div
-          className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-10 transition-opacity duration-500"
-          style={{ background: `radial-gradient(circle at center, ${glowColor}20 0%, transparent 70%)` }}
+          className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-20 transition-opacity duration-500"
+          style={{ background: `radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), ${glowColor}25, transparent 40%)` }}
         />
       )}
+      <div className="absolute inset-0 border border-white/0 group-hover:border-white/5 rounded-2xl transition-all duration-500 pointer-events-none" />
       {children}
-    </div>
+    </motion.div>
   );
 }
 
