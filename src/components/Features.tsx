@@ -5,7 +5,9 @@ import { T, Tag, Reveal, Eyebrow, H2, Bar } from './ui';
 
 export function Features() {
   return (
-    <section id="features" className="flex flex-col bg-[#06070D]">
+    <section id="features" className="flex flex-col bg-[#06070D] relative">
+      <div className="absolute top-0 left-[50px] bottom-0 w-px bg-gradient-to-b from-transparent via-white/10 to-transparent hidden lg:block" />
+
       <div className="min-h-[70vh] flex flex-col justify-center px-6 md:px-24 py-32">
         <Eyebrow>Core System</Eyebrow>
         <H2 sx={{ fontSize: "clamp(3.5rem, 7vw, 6rem)", marginTop: 24, lineHeight: 1.2 }}>The complete reputation firewall.</H2>
@@ -68,7 +70,8 @@ export function Features() {
 
 export function FeatureBlock({ num, tag, title, desc, children }: any) {
   return (
-    <div className="min-h-screen flex flex-col justify-center py-32 px-6 md:px-24 border-t border-white/5">
+    <div className="min-h-screen flex flex-col justify-center py-32 px-6 md:px-24 border-t border-white/5 relative group/block">
+      <div className="absolute top-0 left-0 w-1 h-0 bg-repute-gold transition-all duration-1000 group-hover/block:h-full hidden lg:block" />
       <Reveal>
         <div className="flex items-center gap-6 mb-12">
           <span className="font-mono text-[48px] text-white/10 leading-none font-bold">{num}</span>

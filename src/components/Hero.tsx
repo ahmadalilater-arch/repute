@@ -32,10 +32,29 @@ export function Hero() {
 
   return (
     <section className="min-h-screen w-full flex items-center justify-center pt-32 pb-20 px-6 md:px-12 overflow-hidden relative bg-[#06070D]">
+      {/* Animated SVG Grid */}
+      <div className="absolute inset-0 opacity-[0.15] pointer-events-none">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse">
+              <path d="M 80 0 L 0 0 0 80" fill="none" stroke="white" strokeWidth="0.5" />
+            </pattern>
+            <radialGradient id="fade" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
+              <stop offset="0%" stopColor="white" stopOpacity="1" />
+              <stop offset="100%" stopColor="white" stopOpacity="0" />
+            </radialGradient>
+            <mask id="mask">
+              <rect width="100%" height="100%" fill="url(#fade)" />
+            </mask>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#grid)" mask="url(#mask)" />
+        </svg>
+      </div>
+
       {/* Background Glows */}
-      <div className="absolute w-[1000px] h-[1000px] rounded-full bg-[radial-gradient(circle,rgba(56,189,248,0.03)_0%,transparent_70%)] -top-[10%] -left-[10%] pointer-events-none blur-3xl" />
-      <div className="absolute w-[800px] h-[800px] rounded-full bg-[radial-gradient(circle,rgba(201,168,76,0.03)_0%,transparent_70%)] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none blur-3xl" />
-      <div className="absolute w-[600px] h-[600px] rounded-full bg-[radial-gradient(circle,rgba(56,189,248,0.02)_0%,transparent_70%)] -bottom-[10%] -right-[10%] pointer-events-none blur-3xl" />
+      <div className="absolute w-[1000px] h-[1000px] rounded-full bg-[radial-gradient(circle,rgba(56,189,248,0.05)_0%,transparent_70%)] -top-[10%] -left-[10%] pointer-events-none blur-3xl animate-pulse" />
+      <div className="absolute w-[800px] h-[800px] rounded-full bg-[radial-gradient(circle,rgba(201,168,76,0.05)_0%,transparent_70%)] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none blur-3xl" />
+      <div className="absolute w-[600px] h-[600px] rounded-full bg-[radial-gradient(circle,rgba(56,189,248,0.04)_0%,transparent_70%)] -bottom-[10%] -right-[10%] pointer-events-none blur-3xl animate-pulse" />
 
       <div className="w-full max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32 items-center relative z-10 mx-auto">
         {/* LEFT CONTENT */}
