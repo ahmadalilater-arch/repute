@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shield, MessageSquare, Star, ArrowUpRight, CheckCircle } from 'lucide-react';
+import { Shield, Star, CheckCircle } from 'lucide-react';
 
 export function Globe({ size = 600, opacity = 0.05 }) {
   return (
