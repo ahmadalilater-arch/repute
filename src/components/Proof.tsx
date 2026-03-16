@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState } from 'react';
-import { T, Btn, Reveal, Card, Eyebrow, H2, Counter, Gem } from './ui';
+import React from 'react';
+import { T, Btn, Reveal, Card, Eyebrow, H2, Gem } from './ui';
 import { Shield, Lock, CheckCircle } from 'lucide-react';
+import { useWaitlist } from '@/hooks/use-waitlist';
 
 export function Proof() {
   const data = [
@@ -87,19 +88,9 @@ export function Security() {
 }
 
 export function Waitlist() {
-  const [email, setEmail] = useState("");
-  const [done, setDone] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email.includes("@")) return;
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setDone(true);
-    }, 2000);
-  };
+  const { email, setEmail, status, submit } = useWaitlist();
+  const done = status === "success";
+  const loading = status === "loading";
 
   return (
     <section id="waitlist" className="relative py-32 px-6 md:px-12 text-center overflow-hidden border-t border-white/5">
@@ -120,7 +111,7 @@ export function Waitlist() {
                 <p className="text-white/40 text-sm">We&apos;ll reach out when your industry is ready for deployment.</p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+              <form onSubmit={submit} className="flex flex-col gap-4">
                 <input
                   type="email"
                   value={email}
@@ -130,7 +121,7 @@ export function Waitlist() {
                   className="w-full px-6 py-5 bg-white/5 border border-white/10 rounded-xl text-white focus:border-repute-gold/50 outline-none transition-all"
                 />
                 <Btn v="gold" sz="xl" type="submit" loading={loading} className="w-full">
-                  Secure My Business →
+                  {status === "error" ? "Try Again" : "Secure My Business →"}
                 </Btn>
                 <p className="font-mono text-[10px] text-white/15 tracking-widest uppercase">
                   Founding member spots are limited
