@@ -9,9 +9,27 @@ export function Features() {
       <div className="absolute top-0 left-[50px] bottom-0 w-px bg-gradient-to-b from-transparent via-white/10 to-transparent hidden lg:block" />
 
       <div className="min-h-[70vh] flex flex-col justify-center px-6 md:px-24 py-32">
-        <Eyebrow>Core System</Eyebrow>
-        <H2 sx={{ fontSize: "clamp(3.5rem, 7vw, 6rem)", marginTop: 24, lineHeight: 1.2 }}>The complete reputation firewall.</H2>
-        <p className="text-[20px] md:text-[24px] text-white/40 leading-relaxed mt-8 max-w-2xl font-sans">Four precision tools. One system. Built for operators who refuse to let a bad day become a bad review.</p>
+        <Eyebrow>What We Do</Eyebrow>
+        <H2 sx={{ fontSize: "clamp(3rem, 6vw, 5rem)", marginTop: 24, lineHeight: 1.2 }}>We handle your reviews,<br />you handle your business.</H2>
+        <p className="text-[20px] md:text-[24px] text-white/40 leading-relaxed mt-8 max-w-2xl font-sans">Repute is a simple system that filters your customer feedback. Good reviews go to Google. Bad ones go to you, privately, so you can make it right.</p>
+      </div>
+
+      <div className="min-h-[60vh] flex flex-col justify-center px-6 md:px-24 py-32 border-t border-white/5 bg-white/[0.01]">
+        <Eyebrow color="sky">Who It Is For</Eyebrow>
+        <H2 sx={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", marginTop: 24 }}>Built for the backbone of the community.</H2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+          {[
+            { title: "Restaurants", desc: "Keep the 1-star 'cold food' complaints off your public profile. Solve it with a coupon privately.", icon: "🍽️" },
+            { title: "Salons & Spas", desc: "Build a premium brand that reflects your talent. Let your happy clients do the marketing for you.", icon: "✂️" },
+            { title: "Contractors", desc: "Your reputation is your lifeblood. Ensure every lead sees a wall of 5-star professional proof.", icon: "🛠️" }
+          ].map((item, i) => (
+            <div key={i} className="p-8 rounded-2xl border border-white/5 bg-white/[0.02] hover:border-repute-gold/20 transition-all duration-500">
+              <div className="text-4xl mb-6">{item.icon}</div>
+              <h3 className="text-2xl font-serif text-white mb-4">{item.title}</h3>
+              <p className="text-white/40 leading-relaxed">{item.desc}</p>
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="flex flex-col">

@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useState } from 'react';
-import { T, Tag, Btn, Reveal } from './ui';
+import React from 'react';
+import { T, Tag, Btn } from './ui';
 import { Globe, Phone } from './canvas';
+import { useWaitlist } from '@/hooks/use-waitlist';
 
 export function W({ c, delay = 0, children }: any) {
   return (
@@ -16,19 +17,9 @@ export function W({ c, delay = 0, children }: any) {
 }
 
 export function Hero() {
-  const [email, setEmail] = useState("");
-  const [done, setDone] = useState(false);
-  const [loading, setLoading] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email.includes("@")) return;
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-      setDone(true);
-    }, 1500);
-  };
+  const { email, setEmail, status, submit } = useWaitlist();
+  const done = status === "success";
+  const loading = status === "loading";
 
   return (
     <section className="min-h-screen w-full flex items-center justify-center pt-32 pb-20 px-6 md:px-12 overflow-hidden relative bg-[#06070D]">
@@ -65,20 +56,20 @@ export function Hero() {
             </Tag>
           </div>
 
-          <h1 className="font-serif text-[clamp(3rem,7.5vw,6.5rem)] leading-[1.1] tracking-tight mb-10 text-white">
+          <h1 className="font-serif text-[clamp(2.5rem,7vw,5.5rem)] leading-[1.1] tracking-tight mb-10 text-white">
             <span className="block mb-2 overflow-visible">
-              <W delay={0.2}>Stop</W> <W delay={0.3} c={T.sky}>Negative</W>
+              <W delay={0.2}>The</W> <W delay={0.3} c={T.gold}>Reputation</W>
             </span>
             <span className="block mb-2 overflow-visible">
-              <W delay={0.4}>Reviews</W> <W delay={0.5}>Before</W>
+              <W delay={0.4}>Firewall</W> <W delay={0.5}>for</W>
             </span>
             <span className="block overflow-visible">
-              <W delay={0.6}>They</W> <W delay={0.7}>Go</W> <W delay={0.8} c={T.gold}>Public.</W>
+              <W delay={0.6} c={T.sky}>Local</W> <W delay={0.7}>Shops.</W>
             </span>
           </h1>
 
-          <p className="text-[18px] text-white/50 leading-relaxed mb-12 max-w-[520px] animate-fadeUp font-light" style={{ animationDelay: '1s' }}>
-            Repute is the world’s first AI Reputation Firewall. We intercept unhappy customers privately and route your 5-star fans directly to Google Maps.
+          <p className="text-[18px] text-white/60 leading-relaxed mb-12 max-w-[540px] animate-fadeUp font-light" style={{ animationDelay: '1s' }}>
+            Don't let one bad day ruin your business. We catch unhappy customers privately so you can fix the issue, while sending your happy fans straight to Google Maps.
           </p>
 
           {/* email CTA */}
@@ -89,7 +80,7 @@ export function Hero() {
                 You&apos;re on the list! We&apos;ll reach out soon.
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="group relative p-1 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 hover:bg-white/[0.07] focus-within:border-[#C9A84C]/50 focus-within:bg-[#C9A84C]/5 focus-within:shadow-[0_0_30px_rgba(201,168,76,0.15)] transition-all duration-500 backdrop-blur-sm">
+              <form onSubmit={submit} className="group relative p-1 rounded-2xl bg-white/5 border border-white/10 hover:border-white/20 hover:bg-white/[0.07] focus-within:border-[#C9A84C]/50 focus-within:bg-[#C9A84C]/5 focus-within:shadow-[0_0_30px_rgba(201,168,76,0.15)] transition-all duration-500 backdrop-blur-sm">
                 <div className="flex flex-col sm:flex-row gap-2">
                   <input
                     type="email"
@@ -106,7 +97,7 @@ export function Hero() {
                     loading={loading}
                     className="sm:w-auto w-full justify-center px-10 py-5 rounded-xl"
                   >
-                    Secure My Business
+                    {status === "error" ? "Try Again" : "Secure My Business"}
                   </Btn>
                 </div>
               </form>
