@@ -13,6 +13,10 @@ export function useWaitlist() {
 
     setStatus("loading");
     try {
+      if (!supabase) {
+        throw new Error("Supabase client is not initialized. Please check your environment variables.");
+      }
+
       const { error } = await supabase
         .from("waitlist")
         .insert([{ email }]);
