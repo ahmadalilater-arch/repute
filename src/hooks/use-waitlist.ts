@@ -11,6 +11,12 @@ export function useWaitlist() {
     e.preventDefault();
     if (!email) return;
 
+    if (!supabase) {
+      console.error("Supabase client is not initialized. Please check your environment variables.");
+      setStatus("error");
+      return;
+    }
+
     setStatus("loading");
     try {
       const { error } = await supabase
